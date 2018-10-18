@@ -31,6 +31,29 @@ int create_socket(const char *hostname, const char *port) {
 
     status = getaddrinfo(hostname, port, &hints, &results);
 
+
+
+    return 0;
+}
+
+int chat_client_init(chatClient *client) {
+    char *username = get_username_handle();
+    client->username = username;
+
+    return 0;
+}
+
+int chat_client_connect(chatClient *client, const char *hostname, const char *port) {
+    struct addrinfo hints;
+    struct addrinfo *results;
+    int status,
+        socket_fd;
+
+    hints.ai_family = AF_UNSPEC;  // AF_INET?
+    hints.ai_socktype = SOCK_STREAM;
+
+    status = getaddrinfo(hostname, port, &hints, &results);
+
     if(status !=0 ){
         char err[100];
         snprintf(err, 100, "Error getting address info: %s", gai_strerror(status));
@@ -38,15 +61,13 @@ int create_socket(const char *hostname, const char *port) {
         exit(1);
     }
 
-    return 0;
-}
+    socket_fd = socket(results->ai_family, results->ai_socktype, results->ai_protocol);
+    status = connect(socket_fd, results->ai_addr, results->ai_addrlen);
 
-int chat_client_init(chatClient *client, const char *hostname, const char *port) {
-    int socket_fd = create_socket(hostname, port);
-    char *username = get_username_handle();
-
-    client->socket_fd = socket_fd;
-    client->username = username;
+    if (status < 0) {
+        perror("Error connecting to server: ");
+        exit(1);
+    }
 
     return 0;
 }

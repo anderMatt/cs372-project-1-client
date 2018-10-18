@@ -17,9 +17,9 @@ typedef struct {
 } chatClient;
 
 // Initializes chat client for communication.
-int chat_client_init(chatClient *client, const char *host, const char *port);
+int chat_client_init(chatClient *client);
 
-int chat_client_connect(chatClient *client, char *hostname, char *port);
+int chat_client_connect(chatClient *client, const char *hostname, const char *port);
 
 int chat_client_send_msg(chatClient *client, char *msg);
 

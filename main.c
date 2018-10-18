@@ -20,7 +20,7 @@ int main(int argn, char **argv) {
     const char *port = argv[2];
 
     chatClient client;
-    chat_client_init(&client, host, port);
+    chat_client_init(&client);
 
     return 0;
 }

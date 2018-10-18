@@ -38,15 +38,12 @@ int create_socket(const char *hostname, const char *port) {
         exit(1);
     }
 
-    // TODO: Print error and die, gai_strerror(status)
-
     return 0;
 }
 
 int chat_client_init(chatClient *client, const char *hostname, const char *port) {
     int socket_fd = create_socket(hostname, port);
     char *username = get_username_handle();
-    // TODO - Make sure status is success. Otherise, return it.
 
     client->socket_fd = socket_fd;
     client->username = username;

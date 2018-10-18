@@ -23,6 +23,4 @@ int main(int argn, char **argv) {
     chat_client_init(&client, host, port);
 
     return 0;
-
-
 }

@@ -28,7 +28,7 @@ char *get_username_handle() {
     while (len < 1) {
         printf("Please enter your username: ");
         fgets(username, MAX_USERNAME_LENGTH, stdin);
-        len = strlen(username);
+        len = strlen(username) - 1;  // Don't count \n here.
     }
 
     return username;

@@ -7,8 +7,8 @@ CS 372 - Project 1
 #ifndef CHAT_CLIENT_H
 #define CHAT_CLIENT_H
 
-int MAX_USERNAME_LENGTH = 11;
-int MAX_MESSAGE_LENGTH = 500;
+#define MAX_USERNAME_LENGTH 11
+#define MAX_MESSAGE_LENGTH = 500
 
 
 typedef struct {
@@ -17,7 +17,9 @@ typedef struct {
 } chatClient;
 
 // Initializes chat client for communication.
-int chat_client_init(chatClient *client);
+int chat_client_init(chatClient *client, const char *host, const char *port);
+
+int chat_client_connect(chatClient *client, char *hostname, char *port);
 
 int chat_client_send_msg(chatClient *client, char *msg);
 

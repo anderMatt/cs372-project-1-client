@@ -21,7 +21,7 @@ int chat_client_init(chatClient *client);
 
 int chat_client_connect(chatClient *client, const char *hostname, const char *port);
 
-void chat_client_get_message_to_send(chatClient *client, char *buffer, int maxMsgLen);
+void chat_client_get_message_to_send(chatClient *client, char *buffer);
 
 int chat_client_send_msg(chatClient *client, char *msg);
 

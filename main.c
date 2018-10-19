@@ -26,11 +26,11 @@ int main(int argn, char **argv) {
     char message[MAX_MESSAGE_LENGTH + MAX_USERNAME_LENGTH];
 
     while(1) {
-        chat_client_get_message_to_send(&client, message, MAX_MESSAGE_LENGTH);
+        chat_client_get_message_to_send(&client, message);
         printf("ENTERED MESSAGE: %s", message);
 
         //Max message - 500 chars, plus 10 (for username handle)
-        break;
+//        break;
     }
 
 

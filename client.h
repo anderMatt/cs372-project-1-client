@@ -25,7 +25,7 @@ void chat_client_get_message_to_send(chatClient *client, char *buffer, int maxLe
 int chat_client_send_msg(chatClient *client, const char *msg);
 
 // Reads message into buffer.
-int chat_client_receive_msg(chatClient *client, char *buffer);
+int chat_client_receive_msg(chatClient *client, char *buffer, int maxLen);
 
 void chat_client_destroy(chatClient *client);
 

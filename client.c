@@ -88,16 +88,8 @@ int chat_client_send_msg(chatClient *client, const char *msg) {
     strcat(msgToSend, ">");
     strcat(msgToSend, msg);
 
-    char *c = strchr(msgToSend, '\n');
-    if (c != 0) {
-        printf("CONTAINS NEWLINE!");
-    }
-
 
     int len = strlen(msgToSend);
-    printf("LEN TO SEND:%i\n",len);
-
-    printf("MSG TO SEND:%s\n", msgToSend);
     int status = send(client->socket_fd, msgToSend, len, 0);
 
     if (status < 0) {
@@ -108,11 +100,24 @@ int chat_client_send_msg(chatClient *client, const char *msg) {
     return 0;
 }
 
+int chat_client_receive_msg(chatClient *client, char *buffer, int maxLen) {
+    memset(buffer, '\0', maxLen);
+    int status = recv(client->socket_fd, buffer, maxLen, 0);
+
+    if (status < 0) {
+        perror("Failed to receive message");
+        exit(1);
+    }
+
+    printf("GOT THAT READ STATUS: %i\n", status);
+
+    puts(buffer);
+    return 0;
+}
+
 
 void chat_client_get_message_to_send(chatClient *client, char *buffer, int maxLen) {
-    char msg[maxLen];
+    memset(buffer, '\0', maxLen);
     printf("%s>", client->username);
     fgets(buffer, MAX_MESSAGE_LENGTH, stdin);
-
-//    snprintf(buffer, maxLen, "%s>%s", client->username, msg);
 }

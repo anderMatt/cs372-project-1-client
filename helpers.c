@@ -31,6 +31,10 @@ char *get_username_handle() {
         len = strlen(username) - 1;  // Don't count \n here.
     }
 
+    char *newline;
+    if ((newline = strchr(username, '\n')) != 0) {
+        *newline = '\0';
+    }
+
     return username;
 }
-

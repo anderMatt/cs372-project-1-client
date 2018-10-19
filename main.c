@@ -9,6 +9,7 @@ CS 372 - Project 1
 #include <string.h>
 
 #include "client.h"
+#include "helpers.h"
 
 int main(int argn, char **argv) {
     if (argn < 2) {
@@ -21,6 +22,17 @@ int main(int argn, char **argv) {
 
     chatClient client;
     chat_client_init(&client);
+
+    char message[MAX_MESSAGE_LENGTH + MAX_USERNAME_LENGTH];
+
+    while(1) {
+        chat_client_get_message_to_send(&client, message, MAX_MESSAGE_LENGTH);
+        printf("ENTERED MESSAGE: %s", message);
+
+        //Max message - 500 chars, plus 10 (for username handle)
+        break;
+    }
+
 
     return 0;
 }

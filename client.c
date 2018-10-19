@@ -71,3 +71,20 @@ int chat_client_connect(chatClient *client, const char *hostname, const char *po
 
     return 0;
 }
+
+int chat_client_send_message(chatClient *client, char *msg) {
+    int len = strlen(msg);
+    int status = send(client->socket_fd, msg, len, 0);
+
+    if (status < 0) {
+        perror("Failed to send message: ");
+        exit(1);
+    }
+
+    return 0;
+}
+
+void chat_client_get_message_to_send(chatClient *client, char *buffer, int maxMsgLen) {
+    printf("%s>", client->username);
+    fgets(buffer, maxMsgLen, stdin);
+}

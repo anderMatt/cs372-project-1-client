@@ -9,5 +9,6 @@ CS 372 - Project 1
 
 void die_with_error(char *msg);
 char *get_username_handle();
+void get_message_to_send(char *buffer, int maxLen);
 
 #endif

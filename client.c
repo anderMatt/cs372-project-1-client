@@ -31,10 +31,9 @@ int create_socket(const char *hostname, const char *port) {
 
     status = getaddrinfo(hostname, port, &hints, &results);
 
-
-
     return 0;
 }
+
 
 int chat_client_init(chatClient *client) {
     char *username = get_username_handle();
@@ -42,6 +41,7 @@ int chat_client_init(chatClient *client) {
 
     return 0;
 }
+
 
 int chat_client_connect(chatClient *client, const char *hostname, const char *port) {
     struct addrinfo hints;
@@ -62,15 +62,19 @@ int chat_client_connect(chatClient *client, const char *hostname, const char *po
     }
 
     socket_fd = socket(results->ai_family, results->ai_socktype, results->ai_protocol);
+
+    printf("Connecting to %s:%s...", hostname, port);
     status = connect(socket_fd, results->ai_addr, results->ai_addrlen);
+    printf("SUCCESS.\n");
 
     if (status < 0) {
-        perror("Error connecting to server: ");
+        perror("FAILED: ");
         exit(1);
     }
 
     return 0;
 }
+
 
 int chat_client_send_message(chatClient *client, char *msg) {
     int len = strlen(msg);
@@ -83,6 +87,7 @@ int chat_client_send_message(chatClient *client, char *msg) {
 
     return 0;
 }
+
 
 void chat_client_get_message_to_send(chatClient *client, char *buffer, int maxLen) {
     char msg[maxLen];

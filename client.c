@@ -58,19 +58,20 @@ int chat_client_connect(chatClient *client, const char *hostname, const char *po
         char err[100];
         snprintf(err, 100, "Error getting address info: %s", gai_strerror(status));
         die_with_error(err);
-        exit(1);
     }
 
     socket_fd = socket(results->ai_family, results->ai_socktype, results->ai_protocol);
 
     printf("Connecting to %s:%s...", hostname, port);
     status = connect(socket_fd, results->ai_addr, results->ai_addrlen);
-    printf("SUCCESS.\n");
 
     if (status < 0) {
         perror("FAILED: ");
         exit(1);
     }
+    
+    printf("SUCCESS.\n");
+
 
     return 0;
 }

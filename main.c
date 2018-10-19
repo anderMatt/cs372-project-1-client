@@ -20,25 +20,22 @@ int main(int argn, char **argv) {
     const char *host = argv[1];
     const char *port = argv[2];
 
+    // Initialize connection.
     chatClient client;
     chat_client_init(&client);
+    chat_client_connect(&client, host, port);
 
     char messageToSend[MAX_MESSAGE_LENGTH];
     int chatFinished = 0;
 
     while(!chatFinished) {
         chat_client_get_message_to_send(&client, messageToSend, MAX_MESSAGE_LENGTH);
-        printf("ENTERED MESSAGE: %s", messageToSend);
+        chat_client_send_msg(&client, messageToSend);
 
         // Send message
         // Check if message was to quit.
         chatFinished = is_quit_sentinel(messageToSend);
-        if(chatFinished) {
-            printf("CHAT FINISHED!!!\n");
-            break;
-        }
 
-//        chatFinished = is_quit_sentinel
 
     }
 

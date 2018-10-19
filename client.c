@@ -69,20 +69,39 @@ int chat_client_connect(chatClient *client, const char *hostname, const char *po
         perror("FAILED: ");
         exit(1);
     }
-    
+
     printf("SUCCESS.\n");
+
+    client->socket_fd = socket_fd;
 
 
     return 0;
 }
 
 
-int chat_client_send_message(chatClient *client, char *msg) {
-    int len = strlen(msg);
-    int status = send(client->socket_fd, msg, len, 0);
+int chat_client_send_msg(chatClient *client, const char *msg) {
+    char msgToSend[MAX_MESSAGE_LENGTH + MAX_USERNAME_LENGTH + 1];
+    memset(msgToSend, '\0', MAX_MESSAGE_LENGTH + MAX_USERNAME_LENGTH + 1);
+
+    // Generate message - handle followed by the message text.
+    strcat(msgToSend, client->username);
+    strcat(msgToSend, ">");
+    strcat(msgToSend, msg);
+
+    char *c = strchr(msgToSend, '\n');
+    if (c != 0) {
+        printf("CONTAINS NEWLINE!");
+    }
+
+
+    int len = strlen(msgToSend);
+    printf("LEN TO SEND:%i\n",len);
+
+    printf("MSG TO SEND:%s\n", msgToSend);
+    int status = send(client->socket_fd, msgToSend, len, 0);
 
     if (status < 0) {
-        perror("Failed to send message: ");
+        perror("Failed to send message");
         exit(1);
     }
 

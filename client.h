@@ -22,7 +22,7 @@ int chat_client_connect(chatClient *client, const char *hostname, const char *po
 
 void chat_client_get_message_to_send(chatClient *client, char *buffer, int maxLen);
 
-int chat_client_send_msg(chatClient *client, char *msg);
+int chat_client_send_msg(chatClient *client, const char *msg);
 
 // Reads message into buffer.
 int chat_client_receive_msg(chatClient *client, char *buffer);

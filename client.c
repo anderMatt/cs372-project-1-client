@@ -84,11 +84,10 @@ int chat_client_send_message(chatClient *client, char *msg) {
     return 0;
 }
 
-void chat_client_get_message_to_send(chatClient *client, char *buffer) {
-    int maxLen = MAX_USERNAME_LENGTH + MAX_MESSAGE_LENGTH;
-    char msg[MAX_MESSAGE_LENGTH];
+void chat_client_get_message_to_send(chatClient *client, char *buffer, int maxLen) {
+    char msg[maxLen];
     printf("%s>", client->username);
-    fgets(msg, MAX_MESSAGE_LENGTH, stdin);
+    fgets(buffer, MAX_MESSAGE_LENGTH, stdin);
 
-    snprintf(buffer, maxLen, "%s>%s", client->username, msg);
+//    snprintf(buffer, maxLen, "%s>%s", client->username, msg);
 }

@@ -23,14 +23,23 @@ int main(int argn, char **argv) {
     chatClient client;
     chat_client_init(&client);
 
-    char message[MAX_MESSAGE_LENGTH + MAX_USERNAME_LENGTH];
+    char messageToSend[MAX_MESSAGE_LENGTH];
+    int chatFinished = 0;
 
-    while(1) {
-        chat_client_get_message_to_send(&client, message);
-        printf("ENTERED MESSAGE: %s", message);
+    while(!chatFinished) {
+        chat_client_get_message_to_send(&client, messageToSend, MAX_MESSAGE_LENGTH);
+        printf("ENTERED MESSAGE: %s", messageToSend);
 
-        //Max message - 500 chars, plus 10 (for username handle)
-//        break;
+        // Send message
+        // Check if message was to quit.
+        chatFinished = is_quit_sentinel(messageToSend);
+        if(chatFinished) {
+            printf("CHAT FINISHED!!!\n");
+            break;
+        }
+
+//        chatFinished = is_quit_sentinel
+
     }
 
 

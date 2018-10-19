@@ -10,5 +10,7 @@ CS 372 - Project 1
 void die_with_error(char *msg);
 char *get_username_handle();
 void get_message_to_send(char *buffer, int maxLen);
+int is_quit_sentinel(char *msg);
+void remove_trialing_newline(char *str);
 
 #endif

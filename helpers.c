@@ -68,5 +68,5 @@ int is_quit_sentinel(char *msg) {
 //    printf("Checking this against quit sentinel: %s\n\n", msgToCheck);
 //    printf("String being checked has length: %i\n", strlen(msgToCheck));
 
-    return (strcmp(QUIT_SENTINEL, msg) == 0);
+    return (strcmp(QUIT_SENTINEL, msgToCheck) == 0);
 }

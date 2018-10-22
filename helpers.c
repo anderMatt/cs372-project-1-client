@@ -48,6 +48,25 @@ char *get_username_handle() {
 
 
 int is_quit_sentinel(char *msg) {
-    remove_trailing_newline(msg);
+
+    // Might need to remove username handle.
+    char *delim = strchr(msg, '>');
+    int index;
+//    char msgToCheck[strlen(msg)];
+
+    char *msgToCheck = malloc (sizeof(char) * strlen(msg));
+    memset(msgToCheck, '\0', strlen(msg));
+
+    if (delim != 0) {
+        index = delim - msg;  // Pointer arithmetic.
+        strncpy(msgToCheck, msg+index+1, strlen(msg)-index-1);
+    } else {
+        msgToCheck = msg;
+    }
+
+    remove_trailing_newline(msgToCheck);
+//    printf("Checking this against quit sentinel: %s\n\n", msgToCheck);
+//    printf("String being checked has length: %i\n", strlen(msgToCheck));
+
     return (strcmp(QUIT_SENTINEL, msg) == 0);
 }

@@ -26,7 +26,7 @@ int main(int argn, char **argv) {
     chat_client_connect(&client, host, port);
 
     char messageToSend[MAX_MESSAGE_LENGTH];
-    char messageReceived[MAX_USERNAME_LENGTH + MAX_USERNAME_LENGTH];
+    char messageReceived[MAX_USERNAME_LENGTH + MAX_MESSAGE_LENGTH];
     int chatFinished = 0;
 
     while(!chatFinished) {
@@ -35,17 +35,18 @@ int main(int argn, char **argv) {
 
         chatFinished = is_quit_sentinel(messageToSend);
         if(chatFinished) {
-            printf("Ending chat...");
+            printf("Ending chat...\n");
             exit(1);
         }
 
         // This is immediately printing.
+        memset(messageReceived, '\0', MAX_USERNAME_LENGTH + MAX_MESSAGE_LENGTH);
         chat_client_receive_msg(&client, messageReceived, MAX_USERNAME_LENGTH + MAX_MESSAGE_LENGTH);
         chatFinished = is_quit_sentinel(messageReceived);
 
         // TODO: need to parse out the server's handle. strtok.
         if(chatFinished) {
-            printf("Server ended chat.");
+            printf("Server ended chat.\n");
             exit(1);
         }
     }

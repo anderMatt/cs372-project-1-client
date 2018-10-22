@@ -109,8 +109,6 @@ int chat_client_receive_msg(chatClient *client, char *buffer, int maxLen) {
         exit(1);
     }
 
-    printf("GOT THAT READ STATUS: %i\n", status);
-
     puts(buffer);
     return 0;
 }

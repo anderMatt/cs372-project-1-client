@@ -40,7 +40,6 @@ int main(int argn, char **argv) {
         }
 
         // This is immediately printing.
-        memset(messageReceived, '\0', MAX_USERNAME_LENGTH + MAX_MESSAGE_LENGTH);
         chat_client_receive_msg(&client, messageReceived, MAX_USERNAME_LENGTH + MAX_MESSAGE_LENGTH);
         chatFinished = is_quit_sentinel(messageReceived);
 

@@ -12,6 +12,7 @@ CS 372 - Project 1
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
+#include <unistd.h>
 
 #include "client.h"
 #include "helpers.h"

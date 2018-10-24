@@ -1,8 +1,11 @@
-/*************************
+/*************************************************************************************************
 Matthew Anderson
 10/17/2018
 CS 372 - Project 1
-*************************/
+
+Command-line chat client that allows the user to connect to another party at a desired host:port
+and exchange text messages.
+*************************************************************************************************/
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -10,6 +13,7 @@ CS 372 - Project 1
 
 #include "client.h"
 #include "helpers.h"
+
 
 int main(int argn, char **argv) {
     if (argn < 2) {
@@ -48,8 +52,7 @@ int main(int argn, char **argv) {
         chatFinished = is_quit_sentinel(messageToSend);
         if(chatFinished) {
             printf("Ending chat...\n");
-            chat_client_destroy(&client);
-            exit(1);
+            break;
         }
 
         chat_client_receive_msg(&client, messageReceived, MAX_USERNAME_LENGTH + MAX_MESSAGE_LENGTH);
@@ -57,11 +60,10 @@ int main(int argn, char **argv) {
 
         if(chatFinished) {
             printf("Server ended chat.\n");
-            chat_client_destroy(&client);
-            exit(1);
+            break;
         }
     }
 
-
+    chat_client_destroy(&client);
     return 0;
 }

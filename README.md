@@ -6,5 +6,5 @@ Execution
 ```bash
 $ make clean
 $ make
-$ ./main <host> <port>
+$ ./client <host> <port>
 ```

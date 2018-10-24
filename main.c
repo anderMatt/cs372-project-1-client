@@ -56,12 +56,14 @@ int main(int argn, char **argv) {
         }
 
         chat_client_receive_msg(&client, messageReceived, MAX_USERNAME_LENGTH + MAX_MESSAGE_LENGTH);
-        chatFinished = is_quit_sentinel(messageReceived);
 
+        chatFinished = is_quit_sentinel(messageReceived);
         if(chatFinished) {
             printf("Server ended chat.\n");
             break;
         }
+
+        printf("%s\n", messageReceived);  // Won't print if server ended chat with the quit sentinel.
     }
 
     chat_client_destroy(&client);

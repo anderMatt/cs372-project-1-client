@@ -136,3 +136,12 @@ void chat_client_get_message_to_send(chatClient *client, char *buffer, int maxLe
     printf("%s>", client->username);
     fgets(buffer, MAX_MESSAGE_LENGTH, stdin);
 }
+
+/*
+Resource cleanup - close the open socket and free username handle memory.
+*/
+void chat_client_destroy(chatClient *client) {
+    close(client->socket_fd);
+    free(client->username);
+}
+

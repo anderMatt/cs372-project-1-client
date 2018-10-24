@@ -41,13 +41,14 @@ int main(int argn, char **argv) {
         - check if received message indicates other party wants to end the chat. If yes, terminate.
         - repeat
     */
-    while(!chatFinished) {
+    while(1) {
         chat_client_get_message_to_send(&client, messageToSend, MAX_MESSAGE_LENGTH);
         chat_client_send_msg(&client, messageToSend);
 
         chatFinished = is_quit_sentinel(messageToSend);
         if(chatFinished) {
             printf("Ending chat...\n");
+            chat_client_destroy(&client);
             exit(1);
         }
 
@@ -56,6 +57,7 @@ int main(int argn, char **argv) {
 
         if(chatFinished) {
             printf("Server ended chat.\n");
+            chat_client_destroy(&client);
             exit(1);
         }
     }

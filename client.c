@@ -18,7 +18,9 @@ CS 372 - Project 1
 
 
 
-// Returns file descriptor of created socket.
+/*
+Creates a socket and returns the file descriptor.
+*/
 int create_socket(const char *hostname, const char *port) {
     struct addrinfo hints;
     struct addrinfo *results;
@@ -34,7 +36,10 @@ int create_socket(const char *hostname, const char *port) {
     return 0;
 }
 
-
+/*
+Initializes client with username handle. Socket is not initialized here,
+but instead when a connection is created.
+*/
 int chat_client_init(chatClient *client) {
     char *username = get_username_handle();
     client->username = username;
@@ -42,7 +47,10 @@ int chat_client_init(chatClient *client) {
     return 0;
 }
 
-
+/*
+Attempts to connect to host:port. On success, the opened socket is saved on the chat client.
+On error, prints a message an exits.
+*/
 int chat_client_connect(chatClient *client, const char *hostname, const char *port) {
     struct addrinfo hints;
     struct addrinfo *results;
@@ -78,12 +86,14 @@ int chat_client_connect(chatClient *client, const char *hostname, const char *po
     return 0;
 }
 
-
+/*
+Sends a message to the host the client is currently connected to.
+*/
 int chat_client_send_msg(chatClient *client, const char *msg) {
-    char msgToSend[MAX_MESSAGE_LENGTH + MAX_USERNAME_LENGTH + 1];
+    char msgToSend[MAX_MESSAGE_LENGTH + MAX_USERNAME_LENGTH + 1];  // Second buffer to format the message before sending.
     memset(msgToSend, '\0', MAX_MESSAGE_LENGTH + MAX_USERNAME_LENGTH + 1);
 
-    // Generate message - handle followed by the message text.
+    // Generate message: "{usernameHandle}>{msg}""
     strcat(msgToSend, client->username);
     strcat(msgToSend, ">");
     strcat(msgToSend, msg);
@@ -100,6 +110,10 @@ int chat_client_send_msg(chatClient *client, const char *msg) {
     return 0;
 }
 
+/*
+Attempts to receive input from the connected socket. On success, prints the received message.
+On error, prints an error message and exits.
+*/
 int chat_client_receive_msg(chatClient *client, char *buffer, int maxLen) {
     memset(buffer, '\0', maxLen);
     int status = recv(client->socket_fd, buffer, maxLen, 0);
@@ -113,7 +127,10 @@ int chat_client_receive_msg(chatClient *client, char *buffer, int maxLen) {
     return 0;
 }
 
-
+/*
+Prompts the user to enter a message to send to the host the client is currently
+connected with. Keyboard input is saved to *buffer.
+*/
 void chat_client_get_message_to_send(chatClient *client, char *buffer, int maxLen) {
     memset(buffer, '\0', maxLen);
     printf("%s>", client->username);

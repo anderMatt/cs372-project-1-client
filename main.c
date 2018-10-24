@@ -20,15 +20,27 @@ int main(int argn, char **argv) {
     const char *host = argv[1];
     const char *port = argv[2];
 
-    // Initialize connection.
+    // Initialization - get username handle and connect to other party.
     chatClient client;
     chat_client_init(&client);
     chat_client_connect(&client, host, port);
 
+    // Buffers to hold messages during a chat.
     char messageToSend[MAX_MESSAGE_LENGTH];
     char messageReceived[MAX_USERNAME_LENGTH + MAX_MESSAGE_LENGTH];
     int chatFinished = 0;
 
+    /*
+    Chat flow:
+        - read in message to send from keyboard
+        - send message to other party
+        - check if the user entered the quit sentinel, and wants to end the chat
+            (do this after sending to other party, so that they know our user wants to end the chat)
+        - wait for a response from other party
+        - print response
+        - check if received message indicates other party wants to end the chat. If yes, terminate.
+        - repeat
+    */
     while(!chatFinished) {
         chat_client_get_message_to_send(&client, messageToSend, MAX_MESSAGE_LENGTH);
         chat_client_send_msg(&client, messageToSend);
@@ -39,11 +51,9 @@ int main(int argn, char **argv) {
             exit(1);
         }
 
-        // This is immediately printing.
         chat_client_receive_msg(&client, messageReceived, MAX_USERNAME_LENGTH + MAX_MESSAGE_LENGTH);
         chatFinished = is_quit_sentinel(messageReceived);
 
-        // TODO: need to parse out the server's handle. strtok.
         if(chatFinished) {
             printf("Server ended chat.\n");
             exit(1);

@@ -10,14 +10,21 @@ CS 372 - Project 1
 #include "client.h"
 #include "helpers.h"
 
+// Value user may enter to end a chat.
 static const char *QUIT_SENTINEL = "\\quit";
 
-
+/*
+Prints an error message and exits.
+*/
 void die_with_error(char *msg) {
     puts(msg);
     exit(1);
 }
 
+/*
+Removes a trailing newline from the passed string. This is done
+before performing string comparisons.
+*/
 void remove_trailing_newline(char *str) {
     char *newline;
     if ((newline = strchr(str, '\n')) != 0) {
@@ -25,8 +32,10 @@ void remove_trailing_newline(char *str) {
     }
 }
 
-
-// Asks user for their username. May be up to 10 characters.
+/*
+Prompts user to enter their chat handle. This text will be prepended to
+all chat messages.
+*/
 char *get_username_handle() {
     char *username = malloc(sizeof(char) * MAX_USERNAME_LENGTH);
 
@@ -35,6 +44,7 @@ char *get_username_handle() {
     }
 
     int len = 0;
+    // Handle must be at least one character.
     while (len < 1) {
         printf("Please enter your username: ");
         fgets(username, MAX_USERNAME_LENGTH, stdin);
@@ -46,13 +56,16 @@ char *get_username_handle() {
     return username;
 }
 
+/*
+Checks if a received OR sending message is the quit sentinel, indicating one party desires to
+end the chat.
 
+When a received message is evaluated, the other host's username handle needs to be removed, so that only
+the message text is compared.
+*/
 int is_quit_sentinel(char *msg) {
-
-    // Might need to remove username handle.
-    char *delim = strchr(msg, '>');
+    char *delim = strchr(msg, '>');  // Received messages are of the format "{usernameHandle}>{msg}"
     int index;
-//    char msgToCheck[strlen(msg)];
 
     char *msgToCheck = malloc (sizeof(char) * strlen(msg));
     memset(msgToCheck, '\0', strlen(msg));
@@ -64,9 +77,7 @@ int is_quit_sentinel(char *msg) {
         msgToCheck = msg;
     }
 
-    remove_trailing_newline(msgToCheck);
-//    printf("Checking this against quit sentinel: %s\n\n", msgToCheck);
-//    printf("String being checked has length: %i\n", strlen(msgToCheck));
+    remove_trailing_newline(msgToCheck);  // Newline can break the comparison.
 
     return (strcmp(QUIT_SENTINEL, msgToCheck) == 0);
 }

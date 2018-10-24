@@ -21,6 +21,8 @@ CS 372 - Project 1
 
 /*
 Creates a socket and returns the file descriptor.
+
+Adapted from: https://beej.us/guide/bgnet/html/single/bgnet.html#socket
 */
 int create_socket(const char *hostname, const char *port) {
     struct addrinfo hints;
@@ -51,6 +53,8 @@ int chat_client_init(chatClient *client) {
 /*
 Attempts to connect to host:port. On success, the opened socket is saved on the chat client.
 On error, prints a message an exits.
+
+Adapted from: https://beej.us/guide/bgnet/html/single/bgnet.html#connect
 */
 int chat_client_connect(chatClient *client, const char *hostname, const char *port) {
     struct addrinfo hints;

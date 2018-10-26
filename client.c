@@ -62,8 +62,9 @@ int chat_client_connect(chatClient *client, const char *hostname, const char *po
     int status,
         socket_fd;
 
-    hints.ai_family = AF_UNSPEC;  // AF_INET?
+    hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
+    hints.ai_flags = AI_PASSIVE;
 
     status = getaddrinfo(hostname, port, &hints, &results);
 

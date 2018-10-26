@@ -16,7 +16,7 @@ and exchange text messages.
 
 
 int main(int argn, char **argv) {
-    if (argn < 2) {
+    if (argn < 3) {
         puts("usage: chat host port");
         exit(1);
     }
